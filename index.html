@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Auto Download</title>
+
+  <style>
+    body {
+      background: #111;
+      color: #fff;
+      font-family: Arial, sans-serif;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+    h1 {
+      margin-bottom: 20px;
+      font-size: 24px;
+    }
+    button {
+      padding: 12px 24px;
+      background: #0d6efd;
+      border: none;
+      border-radius: 8px;
+      color: white;
+      font-size: 18px;
+      cursor: pointer;
+      transition: .2s;
+    }
+    button:hover {
+      background: #0b5ed7;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Your download should start automatically</h1>
+  <p id="status">Downloading...</p>
+  <button onclick="retryDownload()">Re-download</button>
+
+  <script>
+    // Update this to your actual download file URL
+    // Examples: 
+    // - Remote file: "https://example.com/myfile.zip"
+    // - Local file: "files/myfile.pdf"
+    const fileUrl = "app/Mynotes-for-android.apk";
+    const fileName = "Mynotes-for-android.apk";
+
+    function startDownload() {
+      try {
+        const link = document.createElement("a");
+        link.href = fileUrl;
+        link.download = fileName;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        
+        // Update status message
+        document.getElementById("status").textContent = "Download started! If it didn't work, click Re-download.";
+      } catch (error) {
+        console.error("Download error:", error);
+        document.getElementById("status").textContent = "Download failed. Please click Re-download.";
+      }
+    }
+
+    function retryDownload() {
+      document.getElementById("status").textContent = "Retrying download...";
+      startDownload();
+    }
+
+    // Auto-start download on page load
+    window.addEventListener("load", startDownload);
+  </script>
+
+</body>
+</html>
